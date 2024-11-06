@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class News extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'categories';
+    protected $table = 'news';
     protected $guarded = [];
 
-    public function news(): HasMany
+    public function category(): BelongsTo
     {
-        return $this->hasMany(News::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 }
