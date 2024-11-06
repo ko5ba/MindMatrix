@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('path_image');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

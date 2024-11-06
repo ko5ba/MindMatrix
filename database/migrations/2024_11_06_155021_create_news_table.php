@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->foreignId('category_id')->index()->constrained('categories');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
