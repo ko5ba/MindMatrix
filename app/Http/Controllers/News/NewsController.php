@@ -8,6 +8,7 @@ use App\Http\Resources\News\NewsShowResource;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
@@ -16,7 +17,7 @@ class NewsController extends Controller
      */
     public function index(): JsonResource
     {
-        $news = News::all();
+        $news = Cache::remember('news', 7200, fn() => News::all());
 
         return NewsIndexResource::collection($news);
     }
@@ -26,6 +27,8 @@ class NewsController extends Controller
      */
     public function show(News $news): NewsShowResource
     {
-        return new NewsShowResource($news);
+        $newsCache = Cache::remember('news' . $news, 7200, fn() => $news);
+
+        return new NewsShowResource($newsCache);
     }
 }

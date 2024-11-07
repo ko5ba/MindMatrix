@@ -24,6 +24,11 @@ class News extends Model
             ->saveSlugsTo('slug');
     }
 
+    public function getRouteKeyName(): String
+    {
+        return 'slug';
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
